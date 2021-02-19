@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../singleton.js"></script>
+</head>
+
+<body>
+    <div>
+        <button class="open">打开Alert</button>
+    </div>
+    <script>
+        const open = document.querySelector('.open');
+
+        function createDom() {
+            let dom = document.createElement('div');
+            dom.style.display = 'none';
+            document.body.appendChild(dom);
+            return dom;
+        }
+
+        let Alert = (function () {
+            let instance = null;
+            let dom;
+
+            function Alert() {
+                instance = instance || (
+                    this instanceof Alert ? this : new Alert()
+                )
+                return instance;
+            }
+
+            Alert.getInstance = function (content) {
+                return new Alert();
+            };
+
+            Alert.prototype.init = function (content) {
+                dom = CreateSingleton(createDom);
+                dom.style.display = 'block';
+                dom.innerHTML = content;
+            };
+            Alert.prototype.show = function (content) {
+                instance.init(content);
+                instance.registerEvent();
+            };
+            Alert.prototype.hide = function (content) {
+                dom.style.display = 'none';
+            };
+
+            Alert.prototype.registerEvent = function (content) {
+                const close = document.querySelector('.close');
+                close.addEventListener('click', function () {
+                    instance.hide();
+                })
+            };
+
+            return Alert;
+        })();
+
+        const alert = Alert.getInstance();
+        console.log(alert === new Alert())
+        open.addEventListener('click', function () {
+            alert.show(`
+            <div>
+              123000
+              <button class="close">关闭Alert</button>
+            </div>
+            `);
+        })
+    </script>
+</body>
+
+</html>
