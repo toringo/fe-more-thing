@@ -1,8 +1,74 @@
+---
+title: 单例模式 - Singleton Pattern
+date: 2021-02-19 23:03
+---
+
 ## 单例模式
 
 单例模式是一种特殊的创建性设计模式，一个类只能有一个实例。它的工作原理是：**如果单例类的实例不存在，则创建并返回一个新实例，但如果一个实例已经存在，则返回对现有实例的引用**。
 
-### 实现方式
+### 一个简单的单例模式
+```js
+const singleton = {
+    add,
+    sub,
+}
+```
+以上通过字面量的方式创建一个实例对象 `singleton` ，用来封装一些方法， `singleton` 就是单例模式的体现。
+
+### 用函数构造单例模式
+用属性缓存实例对象，如果存在即返回，不存在直接赋值返回。
+```js
+function Singleton(name) {
+  this.name = name;
+}
+Singleton.getInstance = function () {
+  if (!this.instance) {
+    this.instance = new Singleton(...arguments);
+  } else {
+    this.apply(this.instance, arguments);
+  }
+
+  return this.instance;
+};
+Singleton.prototype.getName = function () {
+  console.log(this.name);
+};
+console.log(Singleton.getInstance("tori") === Singleton.getInstance("go")); //true
+```
+不足: 由于内部含有单例的操作和对象 `new` 的操作，不能使用 `new` 操作符，且不符合 "单一职责"原理。
+
+**优化后:**
+```js
+const Singleton2 = (function () {
+  let instance;
+  function Singleton2() {
+    instance =
+      instance ||
+      (this instanceof Singleton2 ? this : new Singleton2(...arguments));
+    instance.init(...arguments);
+
+    return instance;
+  }
+
+  Singleton2.prototype.init = function (name) {
+    this.name = name;
+  };
+
+  return Singleton2;
+})();
+
+Singleton2.prototype.showName = function () {
+  console.log(this.name);
+};
+
+let s1 = new Singleton2("tori");
+s1.showName(); // tori
+let s2 = new Singleton2("go");
+s2.showName(); // go
+console.log(s1 === s2); // true
+```
+
 
 #### constructor
 
@@ -90,3 +156,4 @@ var proxySingle = (function(){
   }
  }
 ```
+
