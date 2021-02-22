@@ -1,3 +1,45 @@
+// ========= 命名空间 =====
+const nameSpace = (function () {
+  let init = 12;
+  function add() {}
+
+  function sum() {}
+
+  return {
+    add,
+    sum,
+  };
+})();
+
+// ======== 模块管理 ========
+const allModule = (function () {
+  //ajax模块
+  const ajax = {
+    get: function (api, obj) {
+      console.log("ajax get调用");
+    },
+    post: function (api, obj) {},
+  };
+
+  //dom模块
+  const dom = {
+    get: function () {},
+    create: function () {},
+  };
+
+  //event模块
+  const event = {
+    add: function () {},
+    remove: function () {},
+  };
+
+  return {
+    dom,
+    ajax,
+    event,
+  };
+})();
+
 // ======== 简单版本实现单例模式 ========
 function Singleton(name) {
   this.name = name;
