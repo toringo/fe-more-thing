@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>react modal</title>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+        'use strict';
+        const e = React.createElement;
+        class Message extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    liked: false
+                };
+            }
+            render() {
+                return <button onClick={() => this.setState({
+                    liked: !this.state.liked
+                })}>toggle - {this.state.liked ? '展示' : '隐藏'}</button>;
+            }
+        }
+
+        const domContainer = document.querySelector('#app');
+        // ReactDOM.render(<Message />, domContainer);
+
+        class Singleton {
+            constructor(component, container) {
+                this.dom = null;
+                this.container = container;
+                this.component = component;
+                this.instance = null;
+            }
+            show(option) {
+                if (!this.dom) {
+                    this.dom = document.createElement('div');
+                    (this.container || document.body).appendChild(this.dom);
+                }
+                const Component = this.component;
+                this.instance = ReactDOM.render(<Component {...option} />, this.dom);
+                console.log(this.dom, this.instance);
+            }
+            destroy() {
+                ReactDOM.unmountComponentAtNode(this.dom);
+            }
+        }
+
+        const msg = new Singleton(Message, domContainer);
+
+        msg.show();
+
+        setTimeout(() => {
+            // msg.destroy();
+        }, 2000)
+
+    </script>
+
+</body>
+
+</html>
