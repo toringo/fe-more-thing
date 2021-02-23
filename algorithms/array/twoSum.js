@@ -24,7 +24,6 @@ function sum(arr) {
   let flag = arr[0].replace(/\d/g, "");
   let count = 1;
   let preCount = 0;
-  let preSum = 0;
   let res = sum;
 
   for (let i = 1; i < arr.length; i++) {
@@ -34,8 +33,7 @@ function sum(arr) {
     } else {
       if (count > preCount) {
         preCount = count;
-        preSum = sum;
-        res = preSum;
+        res = sum;
       }
       count = 1;
       flag = arr[i].replace(/\d/g, "");
@@ -47,4 +45,4 @@ function sum(arr) {
 }
 
 console.log(sum(["1a", "2b", "13c", "5a"]));
-console.log(sum(["1a", "2b", "13c", "2b", "5a", "5a", "2b", "2b", "1a", "1a"]));
+console.log(sum(["1a", "2b", "13c", "2b", "5a", "2b", "2b", "1a", "1a"]));
