@@ -166,11 +166,31 @@ console.log(c1 === c2); // true
 
 #### 弹窗（登录框，提示框）
 
-[登录框-Demo](<https://github.com/toringo/fe-more-thing/design-patterns/Singleton> Pattern/example/modal.html)
-[提示框-Demo](<https://github.com/toringo/fe-more-thing/design-patterns/Singleton> Pattern/example/alert.html)
-[React-单例组件](<https://github.com/toringo/fe-more-thing/design-patterns/Singleton> Pattern/example/react-message.html)
+[登录框-Demo](https://github.com/toringo/fe-more-thing/design-patterns/SingletonPattern/example/modal.html)
+[提示框-Demo](https://github.com/toringo/fe-more-thing/design-patterns/SingletonPattern/example/alert.html)
+[React-单例组件](https://github.com/toringo/fe-more-thing/design-patterns/SingletonPattern/example/react-message.html)
 
 > 惰性单例的意思是：**需要时才创建类实例对象**。也有称**懒汉式**和**饿汉式**，区别就是创建需要维护的单一实例的方式不同。
+
+#### 管理模块
+
+#### 命名空间
+
+```
+nameSpace = (function () {
+ var n = 12;
+ function fn() {
+     //...
+ }
+ function sum() {
+
+ }
+ return {
+     fn: fn,
+     sum: sum
+ }
+})();
+```
 
 #### 其他一些场景
 

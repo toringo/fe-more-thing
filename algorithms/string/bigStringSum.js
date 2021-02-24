@@ -3,19 +3,32 @@
  * 要点：整数相加按照加法运算的规则去实现即可
  */
 
-function bigStringSum(str1, str2) {
-  while (str1.length > str2.length) str2 = "0" + str2;
-  while (str1.length < str2.length) str1 = "0" + str1;
-  let res = "";
+/**
+ * 补位法
+ * 将s1和s2的长度用0补齐到一样
+ * 遍历相加
+ * 时间复杂度O(n)，n是较长的数字字符串的长度，空间复杂度 O(1)。
+ */
+function bigStringSum(s1, s2) {
+  while (s1.length > s2.length) s2 = "0" + s2;
+  while (s1.length < s2.length) s1 = "0" + s1;
+  // let res = "";
+  const res = [];
   let carry = 0;
-  for (let i = str1.length - 1; i >= 0; i--) {
-    const sum = +str1[i] + +str2[i] + carry;
-    res = (sum % 10) + res;
-    carry = sum > 9 ? 1 : 0;
+  let i = s1.length - 1;
+  while (i >= 0) {
+    const cur = +s1[i] + +s2[i] + carry;
+
+    res.push(cur % 10);
+    carry = Math.floor(cur / 10);
+    i--;
   }
 
-  return carry == 1 ? "1" + res : res;
+  // return carry ? "1" + res : res;
+  return carry ? "1" + res.reverse().join("") : res.reverse().join("");
 }
+
+// console.log(bigStringSum("01", "9"));
 
 var addStrings = function (num1, num2) {
   let i = num1.length - 1,
@@ -57,6 +70,6 @@ function bigStringSum2(str1, str2) {
   return add(str1.split(""), str2.split("")).join("");
 }
 console.time();
-console.log(bigStringSum2("999991", "9"));
+console.log(bigStringSum("999991", "9"));
 console.timeEnd();
 console.log(addStrings("999991", "9"));
