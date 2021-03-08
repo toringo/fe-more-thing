@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>throttle</title>
+</head>
+<body>
+	<input />
+
+	<script>
+		function throttle(fn, delay) {
+			let now;
+			let timer;
+
+			return (...arg) => {
+				if(now && now + delay > +new Date()) {
+					clearTimeout(timer);
+
+					timer = setTimeout(() => {
+						fn(...arg)
+					}, delay)
+				} else {
+					now = +new Date();
+					fn(...arg)
+				}
+			}
+		}
+
+		const input = document.querySelector('input');
+
+		function clg(...arg) {
+			console.log('keyup', ...arg)
+		}
+
+		input.addEventListener('keyup', throttle(clg, 500))
+
+	</script>
+</body>
+</html>

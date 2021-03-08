@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>error处理</title>
+</head>
+<body>
+	<script>
+		window.addEventListener('error', (error) => {
+			console.log('捕获到异常：', error);
+		}, true)
+		window.addEventListener('unhandledrejection', function (e) {
+			e.preventDefault();
+			console.log("捕获到 promise 错误了");
+			console.log("错误的原因是", e.reason);
+			console.log("Promise 对象是", e.promise);
+			return true;
+		})
+		Promise.reject("promise error");
+	</script>
+</body>
+</html>
