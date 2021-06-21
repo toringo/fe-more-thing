@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <style>
+    #watermark-box {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      font-size: 24px;
+      font-weight: 700;
+      display: flex;
+      flex-wrap: wrap;
+      overflow: hidden;
+      user-select: none;
+      pointer-events: none;
+      opacity: 0.1;
+      z-index: 999;
+    }
+
+    .watermark {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <h2> 机密内容- 机密内容- 机密内容- 机密内容- 机密内容- 机密内容- </h2>
+    <br />
+    <h2> 机密内容- 机密内容- 机密内容- 机密内容- 机密内容- 机密内容- </h2>
+    <br />
+    <h2 onclick="alert(1)"> 机密内容- 机密内容- 机密内容- 机密内容- 机密内容- 机密内容- 机密内容- </h2>
+    <br />
+  </div>
+  <div id="watermark-box">
+  </div>
+  <script>
+    let box = document.getElementById("watermark-box");
+    function doWaterMark(width, height, content) {
+      let boxWidth = box.clientWidth,
+        boxHeight = box.clientHeight;
+      for (let i = 0; i < Math.floor(boxHeight / height); i++) {
+        for (let j = 0; j < Math.floor(boxWidth / width); j++) {
+          let next = document.createElement("div")
+          next.setAttribute("class", "watermark")
+          next.style.width = width + 'px'
+          next.style.height = height + 'px'
+          next.innerText = content
+          box.appendChild(next)
+        }
+      }
+      observerDom();
+    }
+    window.onload = doWaterMark(300, 100, '水印123')
+
+    function observerDom() {
+      const MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+      const mu = new MutationObserver(function () {
+        console.log('dom 变动了')
+      })
+      mu.observe(box, {
+        attributes: true,
+        subtree: true,
+        childList: true
+      });
+    }
+
+
+  </script>
+</body>
+
+</html>
