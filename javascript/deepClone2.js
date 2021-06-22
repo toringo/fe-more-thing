@@ -83,6 +83,13 @@ var b = Symbol.for("b");
 var res = deepClone(student);
 // console.log(res);
 
+/**
+ * ========================== 以下深拷贝比较完善 ==================
+ */
+
+// 记录对象是否循环引用
+const visitedMap = new Map();
+
 function deepClone2(obj, tar) {
   const target = tar || {};
   for (const i in obj) {
@@ -90,6 +97,8 @@ function deepClone2(obj, tar) {
       const cur = obj[i];
       const type = typeof cur;
       if (type === "object") {
+        if (visitedMap.get(cur)) return visitedMap.get(cur);
+
         const objType = Object.prototype.toString.call(cur);
         if (objType === "[object Object]") {
           target[i] = deepClone2(cur, {});
@@ -98,6 +107,7 @@ function deepClone2(obj, tar) {
         } else {
           target[i] = null;
         }
+        visitedMap.set(cur, target);
       } else if (type === "function") {
         const copyFn = (fn) => {
           const newFn = new Function("return " + fn)();
@@ -135,9 +145,16 @@ const parent = {
   },
   [a]: Symbol("sym"),
 };
+parent.parent = parent;
 
 const res2 = deepClone2(parent);
 res2.b.d[0].aa = 7890;
 
 const res3 = res2;
-console.log(res2[a] === parent[a], res3[a] === res2[a]);
+console.log({
+  "res2[a] === parent[a]": res2[a] === parent[a],
+  "res3[a] === res2[a]": res3[a] === res2[a],
+  "res3.parent === res2.parent": res3.parent === res2.parent,
+  "parent.parent===res2.parent": parent.parent === res2.parent,
+  "res2.parent": res2.parent,
+});
