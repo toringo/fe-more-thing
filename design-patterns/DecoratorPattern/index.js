@@ -184,5 +184,55 @@ class Say {
 }
 
 const s = new Say();
-Say.sayHi();
-console.log(s.text());
+// Say.sayHi();
+// console.log(s.text());
+function decorator(key) {
+  console.log("evaluate: ", key);
+  return function () {
+    console.log("call: ", key);
+  };
+}
+
+// 执行顺序
+// @decorator("Class Decorator")
+// class C {
+//   @decorator("Static Property")
+//   static prop;
+
+//   @decorator("Static Method")
+//   static method(foo) {}
+
+//   constructor(foo) {}
+
+//   @decorator("Instance Property")
+//   prop;
+
+//   @decorator("Instance Method")
+//   method(foo) {}
+// }
+
+function deprecate(deprecateObj) {
+  return function (target, name, descriptor) {
+    const info = deprecateObj.info;
+    const url = deprecateObj.url;
+
+    const msg = `warning: ${info}, 详见${url}`;
+
+    return Object.assign({}, descriptor, {
+      value: function value() {
+        console.log(msg);
+        descriptor.value.apply(this, arguments);
+      },
+    });
+  };
+}
+
+class MyMethod {
+  @deprecate({ info: "即将弃用的方法", url: "www.google.com" })
+  sayMe() {
+    console.log("sayMe");
+  }
+}
+
+const myMethod = new MyMethod();
+myMethod.sayMe();

@@ -1,0 +1,63 @@
+<style>
+	.box {
+		width: 888px;
+		height: 300px;
+		margin: 200px auto;
+		position: relative;
+	}
+
+	p {
+		position: absolute;
+		top: 0;
+		left: 0;
+		font-size: 36px;
+		font-weight: 600;
+	}
+
+	#text {
+		color: #666;
+	}
+
+	#copyText {
+		color: rgb(253, 145, 145);
+	}
+
+	#inner {
+		color: transparent;
+		background: linear-gradient(to right, #ABDCFF, #0396FF);
+		-webkit-background-clip: text;
+		background-repeat: no-repeat;
+		animation: landIn 10s linear;
+	}
+
+	@keyframes landIn {
+		0% {
+			background-size: 0 100%;
+		}
+
+		100% {
+			background-size: 79em 100%;
+		}
+	}
+</style>
+
+<div class="box">
+	<p id="text">你好呀，我是南极大冰块~目前是一名在线掘金高级摸鱼师，精通摸鱼、划水、坐着睡觉、拍马屁、吹牛、甩锅、吵架等前端开发必备技能~关注我，一起学习好玩的前端知识吧！</p>
+	<p id="copyText"><span
+			id="inner">你好呀，我是南极大冰块~目前是一名在线掘金高级摸鱼师，精通摸鱼、划水、坐着睡觉、拍马屁、吹牛、甩锅、吵架等前端开发必备技能~关注我，一起学习好玩的前端知识吧！</span></p>
+</div>
+
+<script>
+	let text = document.querySelector("#text")
+	let copyText = document.querySelector("#copyText")
+	// textContent 属性设置或返回指定节点的文本内容，以及它的所有后代。
+	let letters = text.textContent.split("")
+	console.log(letters)
+	for (let i = 0; i < letters.length; i++) {
+		let span = document.createElement("span")
+		span.textContent = letters[i]
+		setTimeout(() => {
+			copyText.append(span)
+		}, 200 * i)
+	}
+</script>
