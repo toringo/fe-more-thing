@@ -1,3 +1,5 @@
+// https://juejin.cn/post/6976028030770610213#heading-7
+
 async function asyncPool(poolLimit, array, iteratorFn) {
   const ret = []; // 存储所有的异步任务
   const executing = []; // 存储正在执行的异步任务
@@ -27,13 +29,14 @@ const timeout = (i) =>
     const delay = parseInt((Math.random() * 10000000) % 3000, 10);
     setTimeout(() => resolve(i), delay);
   });
-// asyncPool(2, [1000, 5000, 3000, 2000], timeout);
+asyncPool(2, [1000, 5000, 3000, 2000], timeout);
 
 var urls = [];
 for (var i = 0; i < 10; i++) {
   urls.push("http://datasource_" + i);
 }
 
+// ES6实现
 function asyncPool2(poolLimit, array, iteratorFn) {
   let i = 0;
 

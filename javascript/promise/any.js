@@ -1,3 +1,6 @@
+// https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise/any
+// 本质上，Promise.any()这个方法和Promise.all()是相反的。
+
 Promise.any2 = function (arr) {
   if (!arr) throw new Error("参数不能为空");
   if (!Array.isArray(arr) && !Array.from(arr).length)
